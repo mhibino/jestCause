@@ -1,4 +1,4 @@
-var clearDB = require('../../credentials/info.js');
+// var clearDB = require('../../credentials/info.js');
 
 // var db = require('knex')({
 // 	client: 'mysql',

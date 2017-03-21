@@ -3,7 +3,8 @@ angular.module('hang', [
 	'hang.home',
 	'hang.services',
 	'ngMaterial',
-	'ngRoute'
+	'ngRoute',
+	'react'
 ])
 .config(function($routeProvider, $httpProvider, $locationProvider){
 	$routeProvider
@@ -33,7 +34,7 @@ angular.module('hang', [
 
 		$locationProvider.hashPrefix('');
 		$httpProvider.interceptors.push('AttachTokens');
-	})	
+	})
 
 
 	.factory('AttachTokens', function ($window) {

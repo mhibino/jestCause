@@ -4,7 +4,7 @@
   "description": "Hang out with friends!",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "test": "test"
   },
   "repository": {
@@ -32,8 +32,11 @@
     "knex": "^0.12.7",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
+    "ngreact": "^0.4.0",
     "path": "^0.12.7",
     "q": "^1.4.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "request": "^2.81.0"
   },
   "devDependencies": {
