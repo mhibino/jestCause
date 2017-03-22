@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var Event = require('./eventModel.js');
 var email = require('emailjs');
 var gmail = require('../../credentials/gmail.js');
@@ -32,9 +33,9 @@ module.exports = {
 
 	createEvent: function(req, res, next) {
 		let {where, when, description, guests, email} = req.body;
-		console.log('whole request: ', req.body)
-		console.log('guests: ', guests)
-		console.log('here are the guests: ', guests)
+		console.log('whole request: ', req.body);
+		console.log('guests: ', guests);
+		console.log('here are the guests: ', guests);
 
 
 		Event.createEvent(req.body, function(response) {
@@ -52,6 +53,6 @@ module.exports = {
 			else {
 				next(new Error('problem saving event'));
 			}
-		})
+		});
 	}
-}
+};
