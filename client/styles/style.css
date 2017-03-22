@@ -33,3 +33,9 @@
 .container {
 	width: 300px;
 }
+
+.md-buttonsmall {
+	min-height: 20px;
+  min-width: 50px;
+  font-size: 7px;
+}

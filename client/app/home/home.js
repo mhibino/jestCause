@@ -2,8 +2,9 @@ angular.module('hang.home', [])
 	.controller('HomeController', function ($scope, Users, $mdPanel, $location, $mdDialog, $route, Auth, Events) {
 
 		$scope.currentNavItem = "hang";
-		// $scope.getCurrentUser = Users.getCurrentUser;
+		$scope.getCurrentUser = Users.getCurrentUser;
 		$scope.event = {};
+		$scope.eventGuestList = ['GUEST', 'GUEST2', 'GUEST3'];
 		$scope.eventGuests = [];
 
 		Events.getGuestList(guests => $scope.guests = guests.toString());
@@ -27,8 +28,8 @@ angular.module('hang.home', [])
 							Users.getUsers()
 							.then(users => {
 								users = users.filter(user => user.email !== $scope.user.email);
-								$scope.users = users;	
-							});						
+								$scope.users = users;
+							});
 						});
 					});
 				})
@@ -54,8 +55,8 @@ angular.module('hang.home', [])
 				console.log('created!')
 				Events.saveGuestList([]);
 				$location.path('/events');
-				Events.getGuestList(guestList => { 
-					$scope.eventGuests = guestList;					
+				Events.getGuestList(guestList => {
+					$scope.eventGuests = guestList;
 				});
 			});
 		}

@@ -91,15 +91,53 @@ angular.module('hang.services', [])
 		}
 	})
 
+	// .factory('Friends', function($http, $location, $window) {
+	// 	var friendList = [];
+
+	// 	var getFriends = function(user) {
+	// 		return $http({
+	// 			method: 'GET',
+	// 			url: '/api/friends',
+	// 			headers: {
+	// 				email: user.email
+	// 			}
+	// 		})
+	// 		.then(resp => {
+	// 			console.log('inside get friends ', resp);
+	// 			return resp.data;
+	// 		});
+	// 	};
+
+	// 	var addFriend = function(friend) {
+	// 		console.log('inside services with friend: ', friend)
+	// 		return $http({
+	// 			method: 'POST',
+	// 			url: '/api/friends',
+	// 			data: {
+	// 				email: friend.email
+	// 			}
+	// 		})
+	// 		.then(resp => {
+	// 			console.log(resp)
+	// 			return resp;
+	// 		});
+	// 	}
+	// 	}
+	// 	return {
+	// 		getFriends,
+	// 		addFriend
+	// 	}
+	// })
+
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
-		
+
 		var getEvents = function(user) {
 			return $http({
 				method: 'GET',
 				url: '/api/events',
 				headers: {
-					email: user.email 
+					email: user.email
 				}
 			})
 			.then(resp => {
@@ -145,13 +183,34 @@ angular.module('hang.services', [])
 
 		var getGuestList = function(callback) {
 			callback(guestList);
+		};
+
+		// var getGuestList = function() {
+		// 	return $http({
+		// 		method: 'GET',
+		// 		url: '/api/guests',
+		// 		headers: {
+		// 			email: user.email
+		// 		}
+		// 	})
+		// }
+
+		var addGuest = function() {
+			return $http({
+				method: 'POST',
+				url: '/api/guests',
+				headers: {
+					email: user.email
+				}
+			})
 		}
 		return {
 			getEvents,
 			createEvent,
 			getHostedEvents,
 			saveGuestList,
-			getGuestList
+			getGuestList,
+			addGuest
 		}
 	});
 
