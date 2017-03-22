@@ -3,8 +3,7 @@ angular.module('hang', [
 	'hang.home',
 	'hang.services',
 	'ngMaterial',
-	'ngRoute',
-	'react'
+	'ngRoute'
 ])
 .config(function($routeProvider, $httpProvider, $locationProvider){
 	$routeProvider
@@ -22,10 +21,6 @@ angular.module('hang', [
 		})
 		.when('/createEvent', {
 			templateUrl: 'app/event/createEvent.html',
-			controller: 'HomeController'
-		})
-		.when('/events', {
-			templateUrl: 'app/event/events.html',
 			controller: 'HomeController'
 		})
 		.otherwise({
