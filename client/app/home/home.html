@@ -1,3 +1,5 @@
+<div class='container'>
+
 <div ng-cloak>
 	<md-content class="md-padding">
 		<md-toolbar layout-align="space-between" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" layout="row">
@@ -10,30 +12,60 @@
 			<div ng-include="'app/home/menu.html'"></div>
 		</md-toolbar>
 	</md-content>
-</div>
+	</div>
 
-<div style="margin-top: 50px" class="home" ng-cloak layout="column" layout-align="center center">
+	<test-event></test-event>
+
+<div class='col-md-6' style='float:left'>
+<!-- DISPLAY ALL USERS FROM SEARCH -->
+<div style="margin-top: 50px" class="home" ng-cloak layout="column" layout-align="space-around start">
 	<div flex-gt-sm="50" flex>
 		<md-content flex layout-align="center center" class="md-padding">
 			<md-toolbar layout="row" class="md-hue-4">
 				<div class="md-toolbar-tools">
-					<span style="text-align: center">Users</span>
+					<span style="text-align: center">Browse Users</span>
 				</div>
 			</md-toolbar>
 			<md-list flex>
 				<md-list-item layout="row" ng-repeat="item in users" ng-click="userEventAdd()" ng-class="{'userInvited': userIsGuest(this.item.email)}">
 					<img ng-class="{'hang': item.hang}" ng-src={{item.profile_url}} class="md-avatar">
 					<div class="md-list-item-text">
-						<h3>{{item.email}}</h3>
+						<h3>{{item.name}}</h3>
+					</div>
+				</md-list-item>
+			</md-list>
+		</md-content>
+</div>
+</div>
+
+
+<!-- DISPLAY ALL FRIENDS FOR USER  -->
+<div style="margin-top: 50px" class="home" ng-cloak layout="column" layout-align="space-around start">
+	<div flex-gt-sm="50" flex>
+		<md-content flex layout-align="center center" class="md-padding">
+			<md-toolbar layout="column" class="md-hue-4">
+				<div class="md-toolbar-tools">
+					<span style="text-align: center">Friends</span>
+				</div>
+			</md-toolbar>
+			<md-list flex>
+				<md-list-item layout="row" ng-repeat="friend in friends" ng-click="userEventAdd()" ng-class="{'userInvited': userIsGuest(this.friend.email)}">
+					<img ng-class="{'hang': friend.hang}" ng-src={{friend.profile_url}} class="md-avatar">
+					<div class="md-list-item-text">
+						<h3>{{friend.name}}</h3>
 					</div>
 				</md-list-item>
 			</md-list>
 		</md-content>
 	</div>
 </div>
-<div style="margin-top: 50px" class="home" ng-cloak layout="row" layout-align="start start">
+</div>
+
+<div class= 'col-md-6' style='float:right'>
+<!-- DISPLAY INVITES INVITED TO -->
+<div style="margin-top: 50px" class="home" ng-cloak layout="column">
 	<div flex>
-	<md-content flex layout-align="center center" class="md-padding">
+	<md-content flex layout-align="space-around end" class="md-padding">
 		<md-toolbar layout="row" class="md-hue-4">
 			<div class="md-toolbar-tools">
 				<span style="text-align: center">Invites</span>
@@ -51,34 +83,30 @@
 			</md-list>
 		</md-content>
 	</div>
+	</div>
 
-
-	<md-content flex layout-align="start start" class="md-padding container">
+<!-- DISPLAY EVENTS HOSTING -->
+<div style="margin-top: 50px" class="home" ng-cloak layout="column">
+	<div flex>
+	<md-content flex layout-align="space-around end" class="md-padding container">
 		<md-toolbar layout="row" class="md-hue-4">
 			<div class="md-toolbar-tools">
 				<span style="text-align: center">Your Hosted Events</span>
 			</div>
 		</md-toolbar>
 			<md-list class="md-dense" flex>
-				<md-list-item class="md-3-line" ng-repeat="item in hostedEvents" ng-click="null">
+				<md-list-item class="md-3-line" ng-repeat="item in hostedEvents" ng-click="showEventClick($event)">
 					<img ng-src={{user.profile_url}} class="md-avatar">
 					<div flex layout="column" layout-align="start start" class="md-list-item-text">
 					<h3>{{item.description}}</h3>
 					<p>When: {{item.when}}</p>
 					<p>Where: {{item.where}}</p>
 					<!-- for adding guestlist -->
-					<md-list class='md-dense' flex>
-					  <md-list-item class="md-3-line" ng-repeat="guest in eventGuestList">
-						  <div flex layout="column" layout-align="start start" class="md-list-item-text">
-						  	<p>{{guest}}</p>
-						  	<md-button class='md-buttonsmall' ng-click='uninviteGuest()'>Uninvite</md-button>
-						  	<md-button class='md-buttonsmall'>Message</md-button>
-						  </div>
-					  </md-list-item>
-					</md-list>
 					</div>
 			</md-list-item>
 			</md-list>
 		</md-content>
 	</div>
+</div>
+</div>
 </div>

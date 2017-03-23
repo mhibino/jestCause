@@ -1,0 +1,34 @@
+<div class='container'>
+  <div>
+    <h3>{{current.description}}</h3>
+  </div>
+          <div>
+            <p>When: {{current.when}}</p>
+            <p>Where: {{current.where}}</p>
+          </div>
+
+<iframe
+  width="300"
+  height="225"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDh5u_j5vXv_arolBCfTFlWgUSxpisFqWM
+    &q=Space+Needle,Seattle+WA" allowfullscreen>
+</iframe>
+
+   <div flex layout="column" layout-align="start center" class="md-list-item-text">
+          <!-- for adding guestlist -->
+          <md-list class='md-dense' flex>
+            <md-list-item class="md-3-line" ng-repeat="guest in eventGuestList">
+              <div flex layout="column" layout-align="start start" class="md-list-item-text">
+                <label>
+                <img ng-src={{guest.profile_url}} class="md-avatar">
+                {{guest.name}}
+                  <button class='btn btn-xs' ng-click='uninviteGuest()'>Uninvite</button>
+                  <button class='btn btn-xs'>Message</button>
+                </label>
+              </div>
+            </md-list-item>
+          </md-list>
+          </div>
+</div>
+

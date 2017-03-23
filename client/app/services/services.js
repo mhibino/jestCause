@@ -92,7 +92,6 @@ angular.module('hang.services', [])
 	})
 
 	// .factory('Friends', function($http, $location, $window) {
-	// 	var friendList = [];
 
 	// 	var getFriends = function(user) {
 	// 		return $http({
@@ -185,22 +184,22 @@ angular.module('hang.services', [])
 			callback(guestList);
 		};
 
-		// var getGuestList = function() {
-		// 	return $http({
-		// 		method: 'GET',
-		// 		url: '/api/guests',
-		// 		headers: {
-		// 			email: user.email
-		// 		}
-		// 	})
-		// }
+		var getCurrentGuests = function(user) {
+			return $http({
+				method: 'GET',
+				url: '/api/guests',
+				headers: {
+					email: user.email
+				}
+			})
+		};
 
-		var addGuest = function() {
+		var addGuest = function(guest) {
 			return $http({
 				method: 'POST',
 				url: '/api/guests',
 				headers: {
-					email: user.email
+					email: guest.email
 				}
 			})
 		}
@@ -212,6 +211,31 @@ angular.module('hang.services', [])
 			getGuestList,
 			addGuest
 		}
+	})
+
+	.factory('Current', function ($http, $location, $window) {
+
+		var currentEvent = {};
+
+		var saveCurrentEvent = function(current) {
+			console.log('running save current: ', current);
+			var split = current.where.split(' ').join('+');
+			console.log('SPLIT CURRENT', split);
+			// var parsed = queryString.stringify(current.where);
+			// console.log('PARSED', parsed);
+			current.where = split;
+			currentEvent = current;
+		};
+
+		var getCurrentEvent = function(callback) {
+			callback(currentEvent);
+		};
+
+		return {
+			saveCurrentEvent: saveCurrentEvent,
+			getCurrentEvent: getCurrentEvent
+		}
+
 	});
 
 
