@@ -15,12 +15,16 @@ module.exports = {
 		});
 	},
 
-	addFriend: function(userEmail, friendEmail, cb){
+	addFriend: function(userId, friendId, cb){
+		// console.log('FRIEND_MODEL | ', 'userEmail: ', userEmail, 'friendEmail: ', friendEmail);
 		db('friends').insert({
-			from_friend: (db.select('id').from('users').where('email', userEmail)),
-			to_friend: (db.select('id').from('users').where('email', friendEmail))
+			from_friend: userId,
+			// (db.select('id').from('users').where('email', userEmail)),
+			to_friend: friendId
+			// (db.select('id').from('users').where('email', friendEmail))
 		}).then(function(newFriend) {
-			cb(null, newFriend);
+			console.log('fm-26: newFriend: ', newFriend[0]);
+			cb(null, newFriend[0]);
 		})
 		.catch(function(err) {
 			cb(err);
@@ -33,6 +37,7 @@ module.exports = {
 			'to_friend': (db.select('id').from('users').where('email', friendEmail))
 		}).del()
 		.then(function(exFriend) {
+			console.log('fm-40: from_friend: ', userEmail, 'exFriend: ', exFriend);
 			cb(null, exFriend);
 		})
 		.catch(function(err) {
