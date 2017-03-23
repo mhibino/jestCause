@@ -5,7 +5,7 @@ angular.module('hang.home', [])
 		$scope.getCurrentUser = Users.getCurrentUser;
 		$scope.event = {};
 		// $scope.current = {};
-		$scope.eventGuestList = ['GUEST', 'GUEST2', 'GUEST3'];
+		$scope.eventGuestList = [{name: 'GUEST', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}, {name: 'GUEST3', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}, {name: 'GUEST', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}];
 		$scope.eventGuests = [];
 		$scope.friends = [{name: 'KITTY1'},{name: 'KITTY2'},{name: 'KITTY3'}];
 

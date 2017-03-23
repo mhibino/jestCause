@@ -15,12 +15,14 @@
     &q=Space+Needle,Seattle+WA" allowfullscreen>
 </iframe>
 
-   <div flex layout="column" layout-align="start start" class="md-list-item-text">
+   <div flex layout="column" layout-align="start center" class="md-list-item-text">
           <!-- for adding guestlist -->
           <md-list class='md-dense' flex>
             <md-list-item class="md-3-line" ng-repeat="guest in eventGuestList">
               <div flex layout="column" layout-align="start start" class="md-list-item-text">
-                <label>{{guest}}
+                <label>
+                <img ng-src={{guest.profile_url}} class="md-avatar">
+                {{guest.name}}
                   <button class='btn btn-xs' ng-click='uninviteGuest()'>Uninvite</button>
                   <button class='btn btn-xs'>Message</button>
                 </label>
