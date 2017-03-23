@@ -1,13 +1,17 @@
 angular.module('hang.home', [])
-	.controller('HomeController', function ($scope, Users, $mdPanel, $location, $mdDialog, $route, Auth, Events) {
+	.controller('HomeController', function ($scope, Users, Current, $mdPanel, $location, $mdDialog, $route, Auth, Events) {
 
 		$scope.currentNavItem = "hang";
 		$scope.getCurrentUser = Users.getCurrentUser;
 		$scope.event = {};
+		// $scope.current = {};
 		$scope.eventGuestList = ['GUEST', 'GUEST2', 'GUEST3'];
 		$scope.eventGuests = [];
 		$scope.friends = [{name: 'KITTY1'},{name: 'KITTY2'},{name: 'KITTY3'}];
+
 		Events.getGuestList(guests => $scope.guests = guests.toString());
+
+		Current.getCurrentEvent(event => $scope.current = event);
 
 		Users.getCurrentUser()
 			.then(user => {
@@ -96,6 +100,7 @@ angular.module('hang.home', [])
 			// console.log('PARAMS', params);
 			// Events.saveCurrent($scope.current);
 			console.log('CURRENT ITEM', $scope.current);
+			Current.saveCurrentEvent(this.item);
 			$scope.toEventItem($event);
 		}
 
@@ -112,6 +117,8 @@ angular.module('hang.home', [])
 					fullscreen: $scope.customFullscreen
 				});
 		}
+
+
 
 		// $scope.eventList = function () {
 		// 	$location.path('/events');

@@ -130,7 +130,6 @@ angular.module('hang.services', [])
 
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
-		var currentEvent = {};
 
 		var getEvents = function(user) {
 			return $http({
@@ -212,6 +211,31 @@ angular.module('hang.services', [])
 			getGuestList,
 			addGuest
 		}
+	})
+
+	.factory('Current', function ($http, $location, $window) {
+
+		var currentEvent = {};
+
+		var saveCurrentEvent = function(current) {
+			console.log('running save current: ', current);
+			var split = current.where.split(' ').join('+');
+			console.log('SPLIT CURRENT', split);
+			// var parsed = queryString.stringify(current.where);
+			// console.log('PARSED', parsed);
+			current.where = split;
+			currentEvent = current;
+		};
+
+		var getCurrentEvent = function(callback) {
+			callback(currentEvent);
+		};
+
+		return {
+			saveCurrentEvent: saveCurrentEvent,
+			getCurrentEvent: getCurrentEvent
+		}
+
 	});
 
 

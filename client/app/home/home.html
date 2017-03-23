@@ -100,15 +100,6 @@
 					<p>When: {{item.when}}</p>
 					<p>Where: {{item.where}}</p>
 					<!-- for adding guestlist -->
-					<md-list class='md-dense' flex>
-					  <md-list-item class="md-3-line" ng-repeat="guest in eventGuestList">
-						  <div flex layout="column" layout-align="start start" class="md-list-item-text">
-						  	<p>{{guest}}</p>
-						  	<md-button class='md-buttonsmall' ng-click='uninviteGuest()'>Uninvite</md-button>
-						  	<md-button class='md-buttonsmall'>Message</md-button>
-						  </div>
-					  </md-list-item>
-					</md-list>
 					</div>
 			</md-list-item>
 			</md-list>
