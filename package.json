@@ -2,7 +2,7 @@
   "name": "jestcause",
   "version": "0.0.1",
   "description": "Hang out with friends!",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "nodemon server/server.js",
     "test": "test",
@@ -42,7 +42,10 @@
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.0",
+<<<<<<< HEAD
     "commitizen": "^2.9.6",
+=======
+>>>>>>> server-01
     "cz-conventional-changelog": "^2.0.0",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
@@ -54,7 +57,10 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-nodemon": "^0.4.2"
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> server-01
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

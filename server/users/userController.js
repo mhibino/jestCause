@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var User = require('./userModel.js');
 var db = require('../config/config.js');
 var jwt = require('jwt-simple');
@@ -7,12 +8,12 @@ var helpers = require('../config/helpers.js');
 
 module.exports = {
 	signin: function(req, res, next) {
-		console.log(req.body.email, req.body.password)
+		console.log(req.body.email, req.body.password);
 		db.select().from('users')
 			.where('email', req.body.email)
 			.then(function(user) {
-				console.log('we have user :', user)
-				console.log(' and still have pass: ', req.body.password)
+				console.log('we have user :', user);
+				console.log(' and still have pass: ', req.body.password);
 				if (!user) {
 					next(new Error('User does not exist!'));
 				}
@@ -27,11 +28,11 @@ module.exports = {
 						}
 					});
 				}
-			})
+			});
 	},
 
 	signup: function (req, res, next) {
-		console.log('signing up with: ', req.body)
+		console.log('signing up with: ', req.body);
 		db.select().from('users')
 			.where('email', req.body.email)
 			.then(function (user) {
@@ -40,9 +41,9 @@ module.exports = {
 				} else {
 					User.signup(req.body, (err, response) => {
 						res.json({token: response});
-					})
+					});
 				}
-			})
+			});
 	},
 
 	getUsers: function(req, res, next) {
@@ -64,7 +65,7 @@ module.exports = {
 			else {
 				res.sendStatus(200);
 			}
-		})
+		});
 	},
 
 	currentUser: function(req, res, next) {
@@ -72,9 +73,9 @@ module.exports = {
     if (!token) {
       next(new Error('No Token!!!!!!'));
     } else {
-    	console.log(' a token: ', token)
+    	console.log(' a token: ', token);
       var user = jwt.decode(token, 'secret');
-      console.log('heres the current jwt: ', user)
+      console.log('heres the current jwt: ', user);
       db.select().from('users').where('email', user[0].email)
     	.then(user => {
     		console.log(user);
@@ -82,7 +83,7 @@ module.exports = {
     	});
     }
   }
-}
+};
 
 
 
