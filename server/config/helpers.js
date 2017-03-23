@@ -1,6 +1,6 @@
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
-var db = require('./config.js')
+var db = require('./config.js');
 var SALT_WORK_FACTOR = 10;
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
 			})
 			.fail(function(err) {
 				next(err);
-			})
+			});
 		}
 	},
 
@@ -50,14 +50,14 @@ module.exports = {
 		.then(function(user) {	
 			bcrypt.compare(pass, user[0].password, function(err, isMatch) {
 				if (err) {
-					console.log('pass error ', err)
+					console.log('pass error ', err);
 					callback(err, null);
 				}
 				else {
-					console.log('match ', isMatch)
+					console.log('match ', isMatch);
 					callback(null, isMatch);
 				}
 			});
 		});
 	}	
-}
+};

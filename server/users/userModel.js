@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var db = require('../config/config.js');
 var bcrypt = require('bcrypt-nodejs');
 var helpers = require('../config/helpers.js');
@@ -13,7 +14,7 @@ module.exports = {
 				callback(null, users);
 			}).catch(function (err) {
 				callback(err);
-			})
+			});
 	},
 
 	signin: function(user, password, callback) {
@@ -22,9 +23,9 @@ module.exports = {
 				callback(err);
 			}
 			else {
-				callback(null, match)
+				callback(null, match);
 			}
-		})
+		});
 	},
 
 	signup: function (user, callback) {
@@ -40,7 +41,7 @@ module.exports = {
 				.then(newUser => {
 					var token = jwt.encode(newUser, 'secret');
 					callback(null, token); 
-				})
+				});
 			}).catch((err) => {
 				callback(err);
 			});
@@ -63,4 +64,6 @@ module.exports = {
 				}
 			});
 	}
-}
+	// getGuests
+
+};

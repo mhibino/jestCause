@@ -2,7 +2,7 @@
   "name": "jestcause",
   "version": "0.0.1",
   "description": "Hang out with friends!",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "nodemon server/server.js",
     "test": "test",
