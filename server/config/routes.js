@@ -1,5 +1,6 @@
 var userController = require('../users/userController.js');
 var eventController = require('../events/eventController.js');
+var friendController = require('../friends/friendController');
 
 module.exports = function(app, express) {
 	// SIGN IN
@@ -18,14 +19,14 @@ module.exports = function(app, express) {
 	app.get('/api/currentUser', userController.currentUser);
 
 	// GUESTS
-	// app.get('/api/guests', userController.getGuests);
-	// app.post('/api/guests', userController.addGuests);
-	// app.put('/api/guests', userController.editGuests);
-	// app.post('/api/guests/delete', userController.deleteGuests);
+	// app.get('/api/guests', guestController.getGuests);
+	// app.post('/api/guests', guestController.addGuests);
+	// app.put('/api/guests', guestController.editGuests);
+	// app.post('/api/guests/delete', guestController.deleteGuests);
 
 	// FRIENDS
-	// app.get('/api/friends', userController.getFriends);
-	// app.post('/api/friends', userController.addFriends);
-	// app.post('/api/friends/delete', userController.deleteFriends);
+	app.get('/api/friends', friendController.getFriends);
+	app.post('/api/friends', friendController.addFriend);
+	app.post('/api/friends/delete', friendController.deleteFriend);
 };
 

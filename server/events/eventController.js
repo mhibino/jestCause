@@ -12,7 +12,8 @@ var server = email.server.connect({
 
 module.exports = {
 	getEvents: function(req, res, next) {
-		Event.getEvents(req.headers.email, function(events) {
+		var userEmail = req.headers.email;
+		Event.getEvents(userEmail, function(events) {
 			if (events) {
 				res.send(events);
 			} else {

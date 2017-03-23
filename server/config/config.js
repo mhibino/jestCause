@@ -42,6 +42,7 @@ db.schema.hasTable('events').then(exists => {
 	if (!exists) {
 		db.schema.createTable('events', function(table) {
 			table.increments();
+			// table.string('eventname'); // <= implement later
 			table.string('where');
 			table.string('when');
 			table.string('description');
