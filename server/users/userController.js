@@ -7,6 +7,7 @@ var helpers = require('../config/helpers.js');
 
 
 module.exports = {
+
 	signin: function(req, res, next) {
 		console.log(req.body.email, req.body.password);
 		db.select().from('users')
