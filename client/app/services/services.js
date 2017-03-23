@@ -92,7 +92,6 @@ angular.module('hang.services', [])
 	})
 
 	// .factory('Friends', function($http, $location, $window) {
-	// 	var friendList = [];
 
 	// 	var getFriends = function(user) {
 	// 		return $http({
@@ -131,6 +130,7 @@ angular.module('hang.services', [])
 
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
+		var currentEvent = {};
 
 		var getEvents = function(user) {
 			return $http({
@@ -185,22 +185,22 @@ angular.module('hang.services', [])
 			callback(guestList);
 		};
 
-		// var getGuestList = function() {
-		// 	return $http({
-		// 		method: 'GET',
-		// 		url: '/api/guests',
-		// 		headers: {
-		// 			email: user.email
-		// 		}
-		// 	})
-		// }
+		var getCurrentGuests = function(user) {
+			return $http({
+				method: 'GET',
+				url: '/api/guests',
+				headers: {
+					email: user.email
+				}
+			})
+		};
 
-		var addGuest = function() {
+		var addGuest = function(guest) {
 			return $http({
 				method: 'POST',
 				url: '/api/guests',
 				headers: {
-					email: user.email
+					email: guest.email
 				}
 			})
 		}

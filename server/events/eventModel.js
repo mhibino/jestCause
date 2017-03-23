@@ -8,7 +8,6 @@ module.exports = {
 			callback(events);
 		}).catch(err => console.error(err));
 
-		
 	},
 
 	getHostedEvents: function(user, callback) {
@@ -35,7 +34,7 @@ module.exports = {
 						user_id: (db.select('id').from('users').where('email', guest)),
 						event_id: inserted[0]
 					}).then(function(insertedUserEvents) {
-						console.log('inserted user_event');				
+						console.log('inserted user_event');
 					})
 				})
 				callback(inserted)

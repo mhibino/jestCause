@@ -6,7 +6,7 @@ angular.module('hang.home', [])
 		$scope.event = {};
 		$scope.eventGuestList = ['GUEST', 'GUEST2', 'GUEST3'];
 		$scope.eventGuests = [];
-
+		$scope.friends = [{name: 'KITTY1'},{name: 'KITTY2'},{name: 'KITTY3'}];
 		Events.getGuestList(guests => $scope.guests = guests.toString());
 
 		Users.getCurrentUser()
@@ -19,21 +19,30 @@ angular.module('hang.home', [])
 					$scope.events = events;
 					Events.getHostedEvents($scope.user)
 					.then(hostedEvents => {
-						$scope.hostedEvents = hostedEvents
-					})
-					.then(function() {
-						Events.getGuestList(guests => {
-							console.log('guests! ', guests)
-							$scope.eventGuests = guests;
-							Users.getUsers()
+						$scope.hostedEvents = hostedEvents;
+						console.log('HOSTED EVENTS', hostedEvents)
+						Users.getUsers()
 							.then(users => {
 								users = users.filter(user => user.email !== $scope.user.email);
 								$scope.users = users;
+								console.log('HERE ARE USERS', users);
 							});
-						});
+					})
+						// .then(function() {
+							// Events.getCurrentGuests($scope.user)
+							  // .then(guests => {
+							  // 	console.log('GUESTS TO DISPLAY', guests);
+							  // 	$scope.eventGuestList = guests;
+							  // 	Friends.getFriends($scope.user)
+							  // 	  .then(friends => {
+							  // 	  	console.log('FRIENDS TO DISPLAY', friends);
+							  // 	  	$scope.friendList = friends;
+							  // 	  })
+							  // })
+						// });
 					});
-				})
-			});
+				});
+
 
 
 
@@ -53,11 +62,7 @@ angular.module('hang.home', [])
 			})
 			.then(resp => {
 				console.log('created!')
-				Events.saveGuestList([]);
-				$location.path('/events');
-				Events.getGuestList(guestList => {
-					$scope.eventGuests = guestList;
-				});
+				$location.path('/home');
 			});
 		}
 
@@ -68,9 +73,9 @@ angular.module('hang.home', [])
 				.then(resp => console.log('updated ', resp))
 		}
 
-		$scope.toHome = function() {
-			$location.path('/home');
-		}
+		// $scope.toHome = function() {
+		// 	$location.path('/home');
+		// }
 
 		$scope.toEvent = function (ev) {
 			$mdDialog.show({
@@ -83,9 +88,34 @@ angular.module('hang.home', [])
 				});
 		}
 
-		$scope.eventList = function () {
-			$location.path('/events');
+
+
+		$scope.showEventClick = function($event) {
+			console.log('CLICKED EVENT', this);
+			$scope.current = this.item;
+			// console.log('PARAMS', params);
+			// Events.saveCurrent($scope.current);
+			console.log('CURRENT ITEM', $scope.current);
+			$scope.toEventItem($event);
 		}
+
+		console.log('$scope.current', $scope.current);
+
+		$scope.toEventItem = function (ev) {
+			console.log('ev', ev);
+			$mdDialog.show({
+					controller: 'HomeController',
+					templateUrl: 'app/event/eventItem.html',
+					parent: angular.element(document.body),
+					targetEvent: ev,
+					clickOutsideToClose: true,
+					fullscreen: $scope.customFullscreen
+				});
+		}
+
+		// $scope.eventList = function () {
+		// 	$location.path('/events');
+		// }
 
 		$scope.changeUrl = function (ev) {
 			var confirm = $mdDialog.prompt()
@@ -131,8 +161,6 @@ angular.module('hang.home', [])
 			console.log('guests after submit ', $scope.eventGuests)
 			$scope.eventGuests = [];
 		}
-
-
 	})
 
 
