@@ -1,12 +1,8 @@
 
 var userController = require('../users/userController.js');
 var eventController = require('../events/eventController.js');
-<<<<<<< HEAD
 var friendController = require('../friends/friendController.js');
-=======
-var friendController = require('../friends/friendController');
 var guestController = require('../guests/guestController');
->>>>>>> server-04
 
 module.exports = function(app, express) {
 	// SIGN IN
