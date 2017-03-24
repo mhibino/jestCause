@@ -36,14 +36,18 @@ angular.module('hang.services', [])
 			cb($window.localStorage.getItem('com.hang'));
 		};
 
-		var fireChatLogin = function(uid) {
+		var fireChatLogin = function(user) {
+			console.log('FIRE UID', user.id);
 			return $http({
 				method: 'GET',
 				url: '/api/firechat',
-				headers: uid
+				headers: {
+					uid: user.id
+				}
 			})
 			  .then(function(res) {
-			  	console.log('FIRE RES', res);
+			  	console.log('FIRE RES', res.data);
+			  	return res.data;
 			  })
 		};
 
@@ -200,11 +204,11 @@ angular.module('hang.services', [])
 			callback(guestList);
 		};
 
-		var getCurrentGuests = function(eventId) {
+		var getCurrentGuests = function(eventid) {
 			return $http({
 				method: 'GET',
 				url: '/api/guests',
-				headers: eventId
+				headers: eventid
 			})
 		};
 

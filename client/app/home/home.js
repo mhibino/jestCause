@@ -31,8 +31,8 @@ angular.module('hang.home', [])
 								console.log('HERE ARE USERS', users);
 								Friends.getFriends($scope.user)
 								  	  .then(friends => {
-								  	  	console.log('FRIENDS TO DISPLAY', friends);
-								  	  	$scope.friends = friends;
+								  	  	console.log('FRIENDS TO DISPLAY', friends.data);
+								  	  	$scope.friends = friends.data;
 								      })
 							})
 					})
@@ -49,15 +49,10 @@ angular.module('hang.home', [])
 
 
 		$scope.fireChatLogin = function() {
-			$scope.token;
+			console.log('AVAILABLE FOR TOKEN', $scope.user);
+			$location.path('/firechat');
 
-			Auth.getToken(function(token) {
-				$scope.token = token;
-			});
-
-			console.log('YOUR JWT TOKEN', $scope.token);
-
-			Auth.fireChatLogin({uid: $scope.token})
+			Auth.fireChatLogin($scope.user)
 			  .then(function(token) {
 			  	console.log('GOT TOKEN', token);
 			  	firebase.auth().signInWithCustomToken(token).catch(function(error) {
@@ -65,6 +60,35 @@ angular.module('hang.home', [])
 					});
 			  })
 		};
+
+		firebase.auth().onAuthStateChanged(function(user) {
+
+			console.log('STATE CHANGE', user);
+			if (user) {
+				user.displayName = $scope.user.name;
+				room = $scope.current;
+				console.log('ROOM FOR FIRE', room);
+				console.log('MOD USER', user);
+		    initChat(user, room);
+		  }
+		});
+
+		function initChat(user, room) {
+
+        var chatRef = firebase.database().ref("chat");
+
+        var chat = new FirechatUI(chatRef, document.getElementById("firechat"));
+        console.log('ROOM INIT', room);
+
+        chat.setUser($scope.user.id, $scope.user.name);
+        chat.createRoom('TEST', 'private', function(roomID) {
+        	console.log('ROOMID', roomID);
+        });
+      }
+
+    $scope.fireChatLogout = function() {
+
+    }
 
 		$scope.createEventClick = function($event) {
 			Events.saveGuestList($scope.eventGuests);
@@ -111,10 +135,9 @@ angular.module('hang.home', [])
 
 
 		$scope.showEventClick = function($event) {
-			console.log('CLICKED EVENT', this);
 			$scope.current = this.item;
 			console.log('CURRENT ITEM', $scope.current);
-			Events.getCurrentGuests({eventId: this.item.id})
+			Events.getCurrentGuests({eventid: this.item.id})
 			  .then(function(guests) {
 			  	console.log('THESE GUESTS', guests);
 			  	$scope.eventGuestList = guests;
@@ -159,12 +182,12 @@ angular.module('hang.home', [])
 		$scope.userEventAdd = function () {
 			console.log('click! ', this)
 			// this.item.invited = this.item.invited === undefined ? true : !this.item.invited;
-			if (!$scope.userIsGuest(this.item.email)) {
-				$scope.eventGuests.push(this.item.email);
-				this.item.invited = true;
+			if (!$scope.userIsGuest(this.friend.email)) {
+				$scope.eventGuests.push(this.friend.email);
+				this.friend.invited = true;
 			} else {
-				$scope.eventGuests.splice($scope.eventGuests.indexOf(this.item.email), 1)
-				this.item.invited = false;
+				$scope.eventGuests.splice($scope.eventGuests.indexOf(this.friend.email), 1)
+				this.friend.invited = false;
 			}
 			console.log($scope.eventGuests);
 		};

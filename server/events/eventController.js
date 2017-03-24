@@ -40,8 +40,8 @@ module.exports = {
 	},
 
 	fireChatLogin: function(req, res) {
-		console.log('REQ BODY UID', req.body);
-		var uid = req.body.uid;
+		console.log('REQ BODY UID', req.headers);
+		var uid = req.headers.uid;
 
 		admin.auth().createCustomToken(uid)
 		  .then(function(customToken) {
