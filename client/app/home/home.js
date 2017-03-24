@@ -1,13 +1,12 @@
 angular.module('hang.home', [])
-	.controller('HomeController', function ($scope, Users, Current, $mdPanel, $location, $mdDialog, $route, Auth, Events) {
+	.controller('HomeController', function ($scope, Users, Current, Friends, $mdPanel, $location, $mdDialog, $route, Auth, Events) {
 
 		$scope.currentNavItem = "hang";
 		$scope.getCurrentUser = Users.getCurrentUser;
 		$scope.event = {};
 		// $scope.current = {};
-		$scope.eventGuestList = [{name: 'GUEST', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}, {name: 'GUEST3', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}, {name: 'GUEST', profile_url: 'https://img.clipartfest.com/7a4839d07e529e256e1ac428c6a5478a_clip-art-check-mark-x-mark-clip-art_600-600.png'}];
+		$scope.eventGuestList = [];
 		$scope.eventGuests = [];
-		$scope.friends = [{name: 'KITTY1'},{name: 'KITTY2'},{name: 'KITTY3'}];
 
 		Events.getGuestList(guests => $scope.guests = guests.toString());
 
@@ -30,22 +29,23 @@ angular.module('hang.home', [])
 								users = users.filter(user => user.email !== $scope.user.email);
 								$scope.users = users;
 								console.log('HERE ARE USERS', users);
-							});
+								Friends.getFriends($scope.user)
+								  	  .then(friends => {
+								  	  	console.log('FRIENDS TO DISPLAY', friends);
+								  	  	$scope.friends = friends;
+								      })
+							})
 					})
-						// .then(function() {
-							// Events.getCurrentGuests($scope.user)
-							  // .then(guests => {
-							  // 	console.log('GUESTS TO DISPLAY', guests);
-							  // 	$scope.eventGuestList = guests;
-							  // 	Friends.getFriends($scope.user)
-							  // 	  .then(friends => {
-							  // 	  	console.log('FRIENDS TO DISPLAY', friends);
-							  // 	  	$scope.friendList = friends;
-							  // 	  })
-							  // })
-						// });
-					});
-				});
+				})
+			});
+
+		$scope.addFriend = function(friend) {
+			console.log('FRIEND PASSED', friend);
+			Friends.addFriend({email: $scope.user.email, friendemail: friend})
+			  .then(function(friend) {
+			  	console.log('FRIEND ADDED');
+			  })
+		}
 
 
 		$scope.fireChatLogin = function() {

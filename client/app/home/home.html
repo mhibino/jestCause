@@ -25,7 +25,7 @@
 				</div>
 			</md-toolbar>
 			<md-list flex>
-				<md-list-item layout="row" ng-repeat="item in users" ng-click="userEventAdd()" ng-class="{'userInvited': userIsGuest(this.item.email)}">
+				<md-list-item layout="row" ng-repeat="item in users" ng-click="addFriend(item.email)" ng-class="{'userInvited': userIsGuest(this.item.email)}">
 					<img ng-class="{'hang': item.hang}" ng-src={{item.profile_url}} class="md-avatar">
 					<div class="md-list-item-text">
 						<h3>{{item.name}}</h3>
@@ -48,7 +48,7 @@
 			</md-toolbar>
 			<md-list flex>
 				<md-list-item layout="row" ng-repeat="friend in friends" ng-click="userEventAdd()" ng-class="{'userInvited': userIsGuest(this.friend.email)}">
-					<img ng-class="{'hang': friend.hang}" ng-src={{friend.profile_url}} class="md-avatar">
+					<!-- <img ng-class="{'hang': friend.hang}" ng-src={{friend.profile_url}} class="md-avatar"> -->
 					<div class="md-list-item-text">
 						<h3>{{friend.name}}</h3>
 					</div>

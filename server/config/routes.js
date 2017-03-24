@@ -1,7 +1,7 @@
 
 var userController = require('../users/userController.js');
 var eventController = require('../events/eventController.js');
-var friendController = require('../friends/friendController');
+var friendController = require('../friends/friendController.js');
 
 module.exports = function(app, express) {
 	// SIGN IN
