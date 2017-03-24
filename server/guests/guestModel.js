@@ -3,7 +3,8 @@ var db = require('../config/config');
 module.exports = {
 
 	getGuests: function(userEmail, eventId, cb) {
-		db.select().from('user_events')
+		console.log('GM-L6-getGuests aka gG: ', 'userEmail ', userEmail, 'eventId ', eventId);
+		db.select('users.name', 'users.email', 'users.profile_url').from('user_events')
 		.innerJoin('users', 'user_events.user_id', 'users.id')
 		.innerJoin('events', 'user_events.event_id', 'events.id')
 		.where({

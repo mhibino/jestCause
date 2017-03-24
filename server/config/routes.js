@@ -1,7 +1,12 @@
 
 var userController = require('../users/userController.js');
 var eventController = require('../events/eventController.js');
+<<<<<<< HEAD
 var friendController = require('../friends/friendController.js');
+=======
+var friendController = require('../friends/friendController');
+var guestController = require('../guests/guestController');
+>>>>>>> server-04
 
 module.exports = function(app, express) {
 	// SIGN IN
@@ -22,7 +27,7 @@ module.exports = function(app, express) {
 	app.post('/api/firechat', eventController.fireChatLogin);
 
 	// GUESTS
-	// app.get('/api/guests', guestController.getGuests);
+	app.get('/api/guests', guestController.getGuests);
 	// app.post('/api/guests', guestController.addGuests);
 	// app.put('/api/guests', guestController.editGuests);
 	// app.post('/api/guests/delete', guestController.deleteGuests);
