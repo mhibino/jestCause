@@ -3,7 +3,7 @@ var db = require('../config/config');
 module.exports = {
 
 	getFriends: function(userEmail, cb) { 
-		db.select('users.name', 'users.email').from('friends')
+		db.select('users.name', 'users.email', 'users.profile_url').from('friends')
 		.innerJoin('users', 'friends.to_friend', 'users.id')
 		.where('friends.from_friend', 
 			db.select('id').from('users').where('email', userEmail))
