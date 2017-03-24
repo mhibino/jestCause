@@ -3,7 +3,7 @@ var Event = require('./eventModel.js');
 var email = require('emailjs');
 var gmail = require('../../credentials/gmail.js');
 var admin = require("firebase-admin");
-var serviceAccount = require("./serviceAccount/serviceKey.json");
+var serviceAccount = require("../serviceAccount/serviceKey.json");
 
 var server = email.server.connect({
 	user: gmail.user,

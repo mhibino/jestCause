@@ -7,7 +7,7 @@ var db = require('../config/config');
 module.exports = {
 
 	getFriends: function(req, res, next) {
-		console.log('GETTING FRIENDS - REQ: ', req);
+		console.log('GETTING FRIENDS - REQ: ', req.headers);
 		var userEmail = req.headers.email;
 		Friend.getFriends(userEmail, function(err, friends) {
 			if(err) {
@@ -21,14 +21,14 @@ module.exports = {
 	addFriend: function(req, res, next) {
 		// return checkFriendCombo(req, res, next)
 		console.log('Inside friendController-ADD-FRIEND...');
-		var userEmail = req.headers.email;
+		var userEmail = req.body.email;
 		console.log('L27: userEmail: ', userEmail);
-		var friendEmail = req.headers.friendemail;
+		var friendEmail = req.body.friendemail;
 		console.log('L29: friendEmail: ', friendEmail);
 
 		// take 2 emails and generate from_friend ID and to_friend ID
 		var from_friend_id;
-		var to_friend_id; 
+		var to_friend_id;
 		db.select('id').from('users').where('email', userEmail)
 		.then(function(userId) {
 			from_friend_id = userId[0].id;
@@ -71,13 +71,13 @@ module.exports = {
 			console.error(err);
 		});
 	},
-	
+
 	deleteFriend: function(req, res, next) {
 		console.log('fc-88: deleteFriend...');
 		var userEmail = req.headers.email;
 		console.log('fc-90: userEmail: ', userEmail);
 		var friendEmail = req.headers.friendemail;
-		console.log('fc-92: friendEmail: ', friendEmail);	
+		console.log('fc-92: friendEmail: ', friendEmail);
 		Friend.deleteFriend(userEmail, friendEmail, function(err, exFriend) {
 		// 	if(err) {
 		// 		next(new Error('Couldn\'t delete your friend'));

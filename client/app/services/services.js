@@ -108,42 +108,41 @@ angular.module('hang.services', [])
 		}
 	})
 
-	// .factory('Friends', function($http, $location, $window) {
+	.factory('Friends', function($http, $location, $window) {
 
-	// 	var getFriends = function(user) {
-	// 		return $http({
-	// 			method: 'GET',
-	// 			url: '/api/friends',
-	// 			headers: {
-	// 				email: user.email
-	// 			}
-	// 		})
-	// 		.then(resp => {
-	// 			console.log('inside get friends ', resp);
-	// 			return resp.data;
-	// 		});
-	// 	};
+		var getFriends = function(user) {
+			console.log('GETTING FRIENDS', user);
+			return $http({
+				method: 'GET',
+				url: '/api/friends',
+				headers: {
+					email: user.email
+				}
+			})
+			.then(resp => {
+				console.log('inside get friends ', resp);
+				return resp.data;
+			});
+		};
 
-	// 	var addFriend = function(friend) {
-	// 		console.log('inside services with friend: ', friend)
-	// 		return $http({
-	// 			method: 'POST',
-	// 			url: '/api/friends',
-	// 			data: {
-	// 				email: friend.email
-	// 			}
-	// 		})
-	// 		.then(resp => {
-	// 			console.log(resp)
-	// 			return resp;
-	// 		});
-	// 	}
-	// 	}
-	// 	return {
-	// 		getFriends,
-	// 		addFriend
-	// 	}
-	// })
+		var addFriend = function(friend) {
+			console.log('inside services with friend: ', friend)
+			return $http({
+				method: 'POST',
+				url: '/api/friends',
+				data: friend
+			})
+			.then(resp => {
+				console.log(resp)
+				return resp;
+			});
+		}
+
+		return {
+			getFriends,
+			addFriend
+		}
+	})
 
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
