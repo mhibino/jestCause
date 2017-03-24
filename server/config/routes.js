@@ -20,7 +20,7 @@ module.exports = function(app, express) {
 	// GET
 	app.get('/api/currentUser', userController.currentUser);
 
-	app.post('/api/firechat', eventController.fireChatLogin);
+	app.get('/api/firechat', eventController.fireChatLogin);
 
 	// GUESTS
 	app.get('/api/guests', guestController.getGuests);

@@ -19,6 +19,10 @@ angular.module('hang', [
 			templateUrl: 'app/home/home.html',
 			controller: 'HomeController'
 		})
+    .when('/firechat', {
+      templateUrl: 'app/event/firechat.html',
+      controller: 'HomeController'
+    })
 		.when('/createEvent', {
 			templateUrl: 'app/event/createEvent.html',
 			controller: 'HomeController'

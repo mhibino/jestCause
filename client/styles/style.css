@@ -3,13 +3,17 @@
 	color: tomato;
 }*/
 
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+	background-color: rgb(221,44,0)
+}
+
 #test {
 	min-height: 200px;
 	min-width: 200px;
 }
 
 .hang {
-	color: tomato;
+	color: rgb(40,53,147);
 	border: solid 5px;
 }
 

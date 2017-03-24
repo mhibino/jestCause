@@ -15,7 +15,7 @@ module.exports = {
 			.then(function(user) {
 				console.log('we have user :', user);
 				console.log(' and still have pass: ', req.body.password);
-				if (!user) {
+				if (user.length === 0) {
 					next(new Error('User does not exist!'));
 				}
 				else {
