@@ -2,9 +2,14 @@ var db = require('../config/config');
 
 module.exports = {
 
-	getGuests: function(eventID, cb) {
+	getGuests: function(userEmail, eventId, cb) {
 		db.select().from('user_events')
-		.innerJoin('users', 'user_events.user_id', 'users.id').where('.event_id', eventID)
+		.innerJoin('users', 'user_events.user_id', 'users.id')
+		.innerJoin('events', 'user_events.event_id', 'events.id')
+		.where({
+			'event_id': eventId,
+			'host_id': (db.select('id').from('users').where('email', userEmail)) 
+		})
 		.then(function(guests) {
 			console.log('These are the guests', guests);
 			cb(null, guests);
