@@ -6,7 +6,6 @@ export default class HelloComponent extends React.Component {
   }
 }
 
-// Set the display name so ngReact can find your component
 HelloComponent.displayName = 'HelloComponent';
 
 

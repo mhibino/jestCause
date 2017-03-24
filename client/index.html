@@ -18,21 +18,43 @@
 <meta name="application-name" content="&nbsp;"/>
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
-
+<!--
 <script src="node_modules/react/dist/react.js"></script>
 <script src="node_modules/react-dom/dist/react-dom.js"></script>
 
-<script src="node_modules/ngreact/ngReact.min.js"></script>
+<script src="node_modules/ngreact/ngReact.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />
+<script src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>
 
 	</head>
 	<body>
+
+		<div id='firechat'></div>
+
 		<div ng-view></div>
+
+
+		<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+		<!-- <scipt src="app/firechat.js"></scipt> -->
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyA3OdKNjNY2-DnlFwqxA4BpajXkJb-7fT8",
+		    authDomain: "hangout-app-4bd8c.firebaseapp.com",
+		    databaseURL: "https://hangout-app-4bd8c.firebaseio.com",
+		    storageBucket: "hangout-app-4bd8c.appspot.com",
+		    messagingSenderId: "269839892265"
+		  };
+		  firebase.initializeApp(config);
+		</script>
+
 		<script src="node_modules/angular/angular.js"></script>
 		<script src="node_modules/angular-route/angular-route.js"></script>
 		<script src="node_modules/angular-material/angular-material.js"></script>
 		<script src="node_modules/angular-aria/angular-aria.js"></script>
 		<script src="node_modules/angular-animate/angular-animate.js"></script>
-		<!-- <script src="app/components/eventComponent.js"></script> -->
 		<script src="app/auth/auth.js"></script>
 		<script src="app/home/home.js"></script>
 		<script src="app/services/services.js"></script>

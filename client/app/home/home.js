@@ -48,7 +48,23 @@ angular.module('hang.home', [])
 				});
 
 
+		$scope.fireChatLogin = function() {
+			$scope.token;
 
+			Auth.getToken(function(token) {
+				$scope.token = token;
+			});
+
+			console.log('YOUR JWT TOKEN', $scope.token);
+
+			Auth.fireChatLogin({uid: $scope.token})
+			  .then(function(token) {
+			  	console.log('GOT TOKEN', token);
+			  	firebase.auth().signInWithCustomToken(token).catch(function(error) {
+				  console.log("Error authenticating user:", error);
+					});
+			  })
+		};
 
 		$scope.createEventClick = function($event) {
 			Events.saveGuestList($scope.eventGuests);
@@ -97,14 +113,18 @@ angular.module('hang.home', [])
 		$scope.showEventClick = function($event) {
 			console.log('CLICKED EVENT', this);
 			$scope.current = this.item;
-			// console.log('PARAMS', params);
-			// Events.saveCurrent($scope.current);
 			console.log('CURRENT ITEM', $scope.current);
-			Current.saveCurrentEvent(this.item);
-			$scope.toEventItem($event);
+			Events.getCurrentGuests({eventId: this.item.id})
+			  .then(function(guests) {
+			  	console.log('THESE GUESTS', guests);
+			  	$scope.eventGuestList = guests;
+			  	Current.saveCurrentEvent(this.item)
+			  	  .then(function() {
+			  	  	$scope.toEventItem($event);
+			  	  })
+			  })
+			  $scope.toEventItem($event);
 		}
-
-		console.log('$scope.current', $scope.current);
 
 		$scope.toEventItem = function (ev) {
 			console.log('ev', ev);
@@ -117,12 +137,6 @@ angular.module('hang.home', [])
 					fullscreen: $scope.customFullscreen
 				});
 		}
-
-
-
-		// $scope.eventList = function () {
-		// 	$location.path('/events');
-		// }
 
 		$scope.changeUrl = function (ev) {
 			var confirm = $mdDialog.prompt()
