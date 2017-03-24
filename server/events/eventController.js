@@ -2,12 +2,19 @@
 var Event = require('./eventModel.js');
 var email = require('emailjs');
 var gmail = require('../../credentials/gmail.js');
+var admin = require("firebase-admin");
+var serviceAccount = require("./serviceAccount/serviceKey.json");
 
 var server = email.server.connect({
 	user: gmail.user,
 	password: gmail.password,
 	host: 'smtp.gmail.com',
 	ssl: true
+});
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://hangout-app-4bd8c.firebaseio.com"
 });
 
 module.exports = {
@@ -32,6 +39,19 @@ module.exports = {
 		});
 	},
 
+	fireChatLogin: function(req, res) {
+		console.log('REQ BODY UID', req.body);
+		var uid = req.body.uid;
+
+		admin.auth().createCustomToken(uid)
+		  .then(function(customToken) {
+		    res.send(customToken);
+		  })
+		  .catch(function(error) {
+		    console.error("Error creating custom token:", error);
+		  });
+	},
+
 	createEvent: function(req, res, next) {
 		let {where, when, description, guests, email} = req.body;
 		console.log('whole request: ', req.body);
@@ -50,7 +70,7 @@ module.exports = {
 					console.log(err || message);
 				});
 				res.send(response);
-			} 
+			}
 			else {
 				next(new Error('problem saving event'));
 			}

@@ -13,10 +13,12 @@ module.exports = function(app, express) {
 	// GET EVENTS
 	app.get('/api/events', eventController.getEvents);
 	app.get('/api/hostedEvents', eventController.getHostedEvents);
-	// 
+	//
 	app.post('/api/events', eventController.createEvent);
-	// GET 
+	// GET
 	app.get('/api/currentUser', userController.currentUser);
+
+	app.post('/api/firechat', eventController.fireChatLogin);
 
 	// GUESTS
 	// app.get('/api/guests', guestController.getGuests);
