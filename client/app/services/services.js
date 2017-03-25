@@ -150,6 +150,7 @@ angular.module('hang.services', [])
 
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
+		var status;
 
 		var getEvents = function(user) {
 			return $http({
@@ -204,6 +205,16 @@ angular.module('hang.services', [])
 			callback(guestList);
 		};
 
+		var saveStatus = function(newstatus) {
+			console.log('running save status: ', newstatus)
+			status = newstatus;
+		};
+
+		var getStatus = function(callback) {
+			console.log('STATUS IN SERV', status);
+			callback(status);
+		};
+
 		var getCurrentGuests = function(eventid) {
 			return $http({
 				method: 'GET',
@@ -213,9 +224,11 @@ angular.module('hang.services', [])
 		};
 
 		var sendResponse = function(response) {
+			console.log('RES OBJ', response);
 			return $http({
-				method: 'POST',
-				url: ''
+				method: 'PUT',
+				url: '/api/guests',
+				data: response
 			})
 		}
 
@@ -237,7 +250,9 @@ angular.module('hang.services', [])
 			getGuestList,
 			getCurrentGuests,
 			removeGuest,
-			sendResponse
+			sendResponse,
+			saveStatus,
+			getStatus
 		}
 	})
 

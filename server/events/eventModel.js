@@ -47,11 +47,6 @@ module.exports = {
 		});
 	},
 
-	storeResponse: function(response) {
-		db
-
-	},
-
 	createEvent: function(event, callback) {
 		console.log('inside the model with this event: ', event);
 		db.select('id').from('users').where('email', event.email)

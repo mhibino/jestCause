@@ -61,10 +61,10 @@ module.exports = {
 	},
 
 	editGuestStatus: function(req, res, next) {
-		console.log('gc-L62: editGuestStatus request received.');
-		var guestId = req.headers.guestid;
-		var eventId = req.headers.eventid;
-		var newStatus = req.headers.newstatus;
+		console.log('gc-L62: editGuestStatus request received.', req.body);
+		var guestId = req.body.guestid;
+		var eventId = req.body.eventid;
+		var newStatus = req.body.newstatus;
 		// invoke method in model, passing in guestId, eventId, new status
 		return Guest.editGuestStatus(guestId, eventId, newStatus)
 		.then(function(err, count) {

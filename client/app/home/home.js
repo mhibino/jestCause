@@ -11,7 +11,12 @@ angular.module('hang.home', [])
 		Events.getGuestList(guests => $scope.guests = guests.data);
 		console.log('SCOPE GUESTS', $scope.guests)
 
+		Events.getStatus(status => $scope.status = status);
+		console.log('STATUS', $scope.status);
+
 		Current.getCurrentEvent(event => $scope.current = event);
+
+		console.log('CURRENT', $scope.current);
 
 		Users.getCurrentUser()
 			.then(user => {
@@ -112,11 +117,15 @@ angular.module('hang.home', [])
       });
     }
 
-    $scope.sendResponse = function(response) {
-    	console.log('INVITE RES', response);
-    	Events.sendResponse(response)
+    $scope.sendResponse = function(response, eventid, userid) {
+    	console.log('INVITE RES', response, eventid, userid);
+    	Events.sendResponse({newstatus: response, eventid: eventid, guestid: userid})
     	  .then(function(result) {
     	  	console.log('response saved', result);
+    	  	var status = "";
+    	  	result.data.new_status === 'NO' ? status = false : status = true;
+    	  	console.log('STATUS SHIFT', status);
+    	  	Events.saveStatus(status);
     	  })
     }
 
