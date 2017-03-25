@@ -27,8 +27,9 @@
                 <label>
                 <img ng-src={{guest.profile_url}} class="md-avatar">
                 {{guest.name}}
-                  <button class='btn btn-xs' ng-click='uninviteGuest(guest.id)'>Uninvite</button>
-                  <button class='btn btn-xs'>Message</button>
+                <div>Status
+                </div>
+                  <button class='btn btn-xs' ng-click='uninviteGuest(guest.id, current.id)'>Uninvite</button>
                 </label>
               </div>
             </md-list-item>

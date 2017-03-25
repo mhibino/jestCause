@@ -48,14 +48,16 @@ module.exports = {
 	},
 
 	removeGuest: function(req, res, next) {
-		var guestId = req.headers.guestid;
-		var eventId = req.headers.eventid;
+		// console.log('REQ BODY', req.body);
+		var guestId = req.body.guestid;
+		var eventId = req.body.eventid;
 		// console.log('GC-L55-Guest-ID: ', guestId, 'Event-ID: ', eventId);
 		return Guest.removeGuest(guestId, eventId)
 		.then(function(removedCount) {
 			// console.log('GC-L59-removed-count: ', removedCount);
 			res.send({ message: 'Guests removed: ', removedCount});
 		});
+
 	},
 
 	editGuestStatus: function(req, res, next) {

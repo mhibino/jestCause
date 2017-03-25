@@ -39,6 +39,17 @@ module.exports = {
 		});
 	},
 
+	storeResponse: function(req, res) {
+		var response = req.body.response;
+		Event.storeResponse(response)
+		  .then(function() {
+		  	res.sendStatus(200);
+		  })
+		  .catch(function(err) {
+		  	console.error(err);
+		  })
+	},
+
 	fireChatLogin: function(req, res) {
 		console.log('REQ BODY UID', req.headers);
 		var uid = req.headers.uid;
