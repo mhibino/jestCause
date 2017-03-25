@@ -56,7 +56,28 @@ module.exports = {
 			// console.log('GC-L59-removed-count: ', removedCount);
 			res.send({ message: 'Guests removed: ', removedCount});
 		});
- 
+	},
+
+	editGuestStatus: function(req, res, next) {
+		console.log('gc-L62: editGuestStatus request received.');
+		var guestId = req.headers.guestid;
+		var eventId = req.headers.eventid;
+		var newStatus = req.headers.newstatus;
+		// invoke method in model, passing in guestId, eventId, new status
+		return Guest.editGuestStatus(guestId, eventId, newStatus)
+		.then(function(err, count) {
+			if (err) {
+				console.error(err);
+			} else {
+				console.log('Guest status updated');
+				res.send({ error: false, message: 'Guest status updated', new_status: newStatus });
+			}
+		})
+		.catch(function(err) {
+			console.error(err);
+		});
 	}
+
+
 };
 

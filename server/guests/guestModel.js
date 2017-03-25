@@ -42,6 +42,18 @@ module.exports = {
 		.catch(function(err) {
 			console.error(err);
 		});
+	},
+	editGuestStatus: function(guestId, eventId, newStatus) {
+		// return a call to db
+		return db('user_events').where({ 'user_id': guestId, 'event_id': eventId })
+		.update({'status': newStatus})
+		.then(function(count) {
+			console.log('gm-L51-Updated guest status -- count: ', count);
+			// return count;
+		})
+		.catch(function(err) {
+			console.error(err);
+		});
 	}
 };
 
