@@ -32,12 +32,33 @@ angular.module('hang.services', [])
 			$location.path('/signin');
 		};
 
+		var getToken = function(cb) {
+			cb($window.localStorage.getItem('com.hang'));
+		};
+
+		var fireChatLogin = function(user) {
+			console.log('FIRE UID', user.id);
+			return $http({
+				method: 'GET',
+				url: '/api/firechat',
+				headers: {
+					uid: user.id
+				}
+			})
+			  .then(function(res) {
+			  	console.log('FIRE RES', res.data);
+			  	return res.data;
+			  })
+		};
+
 
 		return {
 			signin: signin,
 			signup: signup,
 			isAuth: isAuth,
-			signout: signout
+			signout: signout,
+			getToken: getToken,
+			fireChatLogin: fireChatLogin
 		};
 	})
 
@@ -91,15 +112,52 @@ angular.module('hang.services', [])
 		}
 	})
 
+	.factory('Friends', function($http, $location, $window) {
+
+		var getFriends = function(user) {
+			console.log('GETTING FRIENDS', user);
+			return $http({
+				method: 'GET',
+				url: '/api/friends',
+				headers: {
+					email: user.email
+				}
+			})
+			.then(resp => {
+				console.log('inside get friends ', resp);
+				return resp.data;
+			});
+		};
+
+		var addFriend = function(friend) {
+			console.log('inside services with friend: ', friend)
+			return $http({
+				method: 'POST',
+				url: '/api/friends',
+				data: friend
+			})
+			.then(resp => {
+				console.log(resp)
+				return resp;
+			});
+		}
+
+		return {
+			getFriends,
+			addFriend
+		}
+	})
+
 	.factory('Events', function($http, $location, $window) {
 		var guestList = [];
-		
+		var status;
+
 		var getEvents = function(user) {
 			return $http({
 				method: 'GET',
 				url: '/api/events',
 				headers: {
-					email: user.email 
+					email: user.email
 				}
 			})
 			.then(resp => {
@@ -145,14 +203,82 @@ angular.module('hang.services', [])
 
 		var getGuestList = function(callback) {
 			callback(guestList);
+		};
+
+		var saveStatus = function(newstatus) {
+			console.log('running save status: ', newstatus)
+			status = newstatus;
+		};
+
+		var getStatus = function(callback) {
+			console.log('STATUS IN SERV', status);
+			callback(status);
+		};
+
+		var getCurrentGuests = function(eventid) {
+			return $http({
+				method: 'GET',
+				url: '/api/guests',
+				headers: eventid
+			})
+		};
+
+		var sendResponse = function(response) {
+			console.log('RES OBJ', response);
+			return $http({
+				method: 'PUT',
+				url: '/api/guests',
+				data: response
+			})
+		}
+
+		var removeGuest = function(guestid, eventid) {
+			return $http({
+				method: 'POST',
+				url: '/api/guests/delete',
+				data: {
+					guestid: guestid,
+					eventid: eventid
+				}
+			})
 		}
 		return {
 			getEvents,
 			createEvent,
 			getHostedEvents,
 			saveGuestList,
-			getGuestList
+			getGuestList,
+			getCurrentGuests,
+			removeGuest,
+			sendResponse,
+			saveStatus,
+			getStatus
 		}
+	})
+
+	.factory('Current', function ($http, $location, $window) {
+
+		var currentEvent = {};
+
+		var saveCurrentEvent = function(current) {
+			console.log('running save current: ', current);
+			var split = current.where.split(' ').join('+');
+			console.log('SPLIT CURRENT', split);
+			// var parsed = queryString.stringify(current.where);
+			// console.log('PARSED', parsed);
+			current.where = split;
+			currentEvent = current;
+		};
+
+		var getCurrentEvent = function(callback) {
+			callback(currentEvent);
+		};
+
+		return {
+			saveCurrentEvent: saveCurrentEvent,
+			getCurrentEvent: getCurrentEvent
+		}
+
 	});
 
 

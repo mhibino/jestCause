@@ -1,6 +1,9 @@
+/*jshint esversion: 6 */
 var Event = require('./eventModel.js');
 var email = require('emailjs');
 var gmail = require('../../credentials/gmail.js');
+var admin = require("firebase-admin");
+var serviceAccount = require("../serviceAccount/serviceKey.json");
 
 var server = email.server.connect({
 	user: gmail.user,
@@ -9,9 +12,15 @@ var server = email.server.connect({
 	ssl: true
 });
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://hangout-app-4bd8c.firebaseio.com"
+});
+
 module.exports = {
 	getEvents: function(req, res, next) {
-		Event.getEvents(req.headers.email, function(events) {
+		var userEmail = req.headers.email;
+		Event.getEvents(userEmail, function(events) {
 			if (events) {
 				res.send(events);
 			} else {
@@ -30,11 +39,35 @@ module.exports = {
 		});
 	},
 
+	// storeResponse: function(req, res) {
+	// 	var response = req.body.response;
+	// 	Event.storeResponse(response)
+	// 	  .then(function() {
+	// 	  	res.sendStatus(200);
+	// 	  })
+	// 	  .catch(function(err) {
+	// 	  	console.error(err);
+	// 	  })
+	// },
+
+	fireChatLogin: function(req, res) {
+		console.log('REQ BODY UID', req.headers);
+		var uid = req.headers.uid;
+
+		admin.auth().createCustomToken(uid)
+		  .then(function(customToken) {
+		    res.send(customToken);
+		  })
+		  .catch(function(error) {
+		    console.error("Error creating custom token:", error);
+		  });
+	},
+
 	createEvent: function(req, res, next) {
 		let {where, when, description, guests, email} = req.body;
-		console.log('whole request: ', req.body)
-		console.log('guests: ', guests)
-		console.log('here are the guests: ', guests)
+		console.log('whole request: ', req.body);
+		console.log('guests: ', guests);
+		console.log('here are the guests: ', guests);
 
 
 		Event.createEvent(req.body, function(response) {
@@ -48,10 +81,10 @@ module.exports = {
 					console.log(err || message);
 				});
 				res.send(response);
-			} 
+			}
 			else {
 				next(new Error('problem saving event'));
 			}
-		})
+		});
 	}
-}
+};

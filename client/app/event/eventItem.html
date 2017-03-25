@@ -1,0 +1,43 @@
+<div class='container'>
+  <div>
+    <h3>{{current.description}}</h3>
+  </div>
+          <div>
+            <p>When: {{current.when}}</p>
+            <p>Where: {{current.where}}</p>
+          </div>
+
+    <label>Response: <button ng-click="sendResponse('Yes', current.event_id, user.id)">Confirm</button><button ng-click="sendResponse('No', current.event_id, user.id)">Decline</button></label>
+
+<div id='firechat'>
+  <button ng-click='fireChatLogin()'>FIRECHAT LOGIN</button>
+</div>
+
+<iframe
+  width="300"
+  height="225"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDh5u_j5vXv_arolBCfTFlWgUSxpisFqWM
+    &q=369+Lexington+Ave,New+York+NY" allowfullscreen>
+</iframe>
+
+   <div flex layout="column" layout-align="start center" class="md-list-item-text">
+          <!-- for adding guestlist -->
+          <md-list class='md-dense' flex>
+            <md-list-item class="md-3-line" ng-repeat="guest in guests track by $index">
+              <div flex layout="column" layout-align="start start" class="md-list-item-text">
+                <label>
+                <img ng-src={{guest.profile_url}} class="md-avatar">
+                {{guest.name}}
+                <div>Status
+                </div>
+                  <button class='btn btn-xs' ng-click='uninviteGuest(guest.id, current.event_id)'>Uninvite</button>
+                </label>
+              </div>
+            </md-list-item>
+          </md-list>
+          </div>
+
+
+</div>
+

@@ -19,21 +19,21 @@ angular.module('hang', [
 			templateUrl: 'app/home/home.html',
 			controller: 'HomeController'
 		})
+    .when('/firechat', {
+      templateUrl: 'app/event/firechat.html',
+      controller: 'HomeController'
+    })
 		.when('/createEvent', {
 			templateUrl: 'app/event/createEvent.html',
 			controller: 'HomeController'
 		})
-		.when('/events', {
-			templateUrl: 'app/event/events.html',
-			controller: 'HomeController'
-		})
 		.otherwise({
-			redirectTo: '/signin'
+			redirectTo: '/home'
 		});
 
 		$locationProvider.hashPrefix('');
 		$httpProvider.interceptors.push('AttachTokens');
-	})	
+	})
 
 
 	.factory('AttachTokens', function ($window) {
@@ -56,4 +56,25 @@ angular.module('hang', [
 			}
 		});
 
-	})
+	});
+
+			// firebase.auth().onAuthStateChanged(function(user) {
+   //      // Once authenticated, instantiate Firechat with the logged in user
+   //      if (user) {
+   //        initChat(user);
+   //      }
+   //    });
+
+
+
+
+      // function initChat(user) {
+      //   // Get a Firebase Database ref
+      //   var chatRef = firebase.database().ref("chat");
+
+      //   // Create a Firechat instance
+      //   var chat = new FirechatUI(chatRef, document.getElementById("firechat"));
+
+      //   // Set the Firechat user
+      //   chat.setUser(user.uid, user.displayName);
+      // }
