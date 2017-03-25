@@ -72,6 +72,26 @@ db.schema.hasTable('user_events').then(exists => {
 	}
 });
 
+// ADD status to user_events (aka: guests) 
+// in Raw Sql: `alter table user_events add status string;`
+db.schema.hasTable('user_events').then(exists => {
+	db.schema.hasColumn('user_events', 'status')
+	.then(exists => {
+		if (!exists) {
+			db.schema.alterTable('user_events', function(table) {
+				table.string('status');
+			}).then(function() {
+				console.log('Added status column to user_events');
+			});
+		} else {
+			console.log('status column already exists in user_events table');
+		}
+	})
+	.catch(function(err) {
+		console.error(err);
+	});
+});
+
 // FRIENDS TABLE
 db.schema.hasTable('friends').then(exists => {
 	if (!exists) {
