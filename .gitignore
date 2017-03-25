@@ -41,3 +41,5 @@ build
 deploy
 credentials
 serviceAccount
+
+firechat.js

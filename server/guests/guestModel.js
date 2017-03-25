@@ -44,6 +44,7 @@ module.exports = {
 		});
 	},
 	editGuestStatus: function(guestId, eventId, newStatus) {
+		console.log('PARAMS', guestId, eventId, newStatus);
 		// return a call to db
 		return db('user_events').where({ 'user_id': guestId, 'event_id': eventId })
 		.update({'status': newStatus})
