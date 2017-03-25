@@ -14,7 +14,8 @@
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
 <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
 <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />
+<!-- <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" /> -->
 <meta name="application-name" content="&nbsp;"/>
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
@@ -25,7 +26,7 @@
 <script src="node_modules/ngreact/ngReact.min.js"></script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />
+
 <script src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>
 
 	</head>
@@ -36,17 +37,7 @@
 
 		<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
 		<!-- <scipt src="app/firechat.js"></scipt> -->
-		<script>
-		  // Initialize Firebase
-		  var config = {
-		    apiKey: "AIzaSyA3OdKNjNY2-DnlFwqxA4BpajXkJb-7fT8",
-		    authDomain: "hangout-app-4bd8c.firebaseapp.com",
-		    databaseURL: "https://hangout-app-4bd8c.firebaseio.com",
-		    storageBucket: "hangout-app-4bd8c.appspot.com",
-		    messagingSenderId: "269839892265"
-		  };
-		  firebase.initializeApp(config);
-		</script>
+		<script src="credentials/firechat.js"></script>
 
 		<script src="node_modules/angular/angular.js"></script>
 		<script src="node_modules/angular-route/angular-route.js"></script>

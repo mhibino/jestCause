@@ -18,7 +18,7 @@ module.exports = {
 		// db.select().from('events')
 		// .innerJoin('user_events', 'events.id', 'user_events.event_id')
 		// .innerJoin('users', 'users.id', 'events.host_id') // <=ISN'T THAT HOSTED EVENTS???
-		// .where('user_events.user_id', 
+		// .where('user_events.user_id',
 		// 	db.select('id').from('users')
 		// 	.where('email', userEmail))
 
@@ -30,14 +30,14 @@ module.exports = {
 
 	// query db for list of events a specific user is hosting
 	getHostedEvents: function(userEmail, callback) {
-		// RAW SQL 
+		// RAW SQL
 		// select * from events e inner join users u on e.host_id=u.id where u.email=user
 		// KNEX
 		db.select().from('events')
 		.innerJoin('users', 'events.host_id', 'users.id')
 		.where('email', userEmail)
 		// // THEIR CODE
-		// db.from('events').where('host_id', 
+		// db.from('events').where('host_id',
 		// 	db.select('id').from('users').where('email', userEmail)
 		// 	)
 		.then(function(events) {
@@ -45,6 +45,11 @@ module.exports = {
 		}).catch(function(err) {
 			console.error(err);
 		});
+	},
+
+	storeResponse: function(response) {
+		db
+
 	},
 
 	createEvent: function(event, callback) {
@@ -63,7 +68,7 @@ module.exports = {
 						user_id: (db.select('id').from('users').where('email', guest)),
 						event_id: inserted[0]
 					}).then(function(insertedUserEvents) {
-						console.log('inserted user_event');				
+						console.log('inserted user_event');
 					});
 				});
 				callback(inserted);

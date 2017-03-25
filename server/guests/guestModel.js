@@ -16,7 +16,7 @@ module.exports = {
 	},
 
 	addGuest: function(eventId, guestId) {
-			
+
 		return db.insert({user_id: guestId, event_id: eventId})
 		.into('user_events')
 		.then(function(newGuest) {

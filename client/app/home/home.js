@@ -15,24 +15,24 @@ angular.module('hang.home', [])
 
 		Users.getCurrentUser()
 			.then(user => {
-				console.log('get current user called!', user)
+				// console.log('get current user called!', user)
 				$scope.user = user[0];
 				Events.getEvents($scope.user)
 				.then(events => {
-					console.log('events! ', events)
+					// console.log('events! ', events)
 					$scope.events = events;
 					Events.getHostedEvents($scope.user)
 					.then(hostedEvents => {
 						$scope.hostedEvents = hostedEvents;
-						console.log('HOSTED EVENTS', hostedEvents)
+						// console.log('HOSTED EVENTS', hostedEvents)
 						Users.getUsers()
 							.then(users => {
 								users = users.filter(user => user.email !== $scope.user.email);
 								$scope.users = users;
-								console.log('HERE ARE USERS', users);
+								// console.log('HERE ARE USERS', users);
 								Friends.getFriends($scope.user)
 								  	  .then(friends => {
-								  	  	console.log('FRIENDS TO DISPLAY', friends.data);
+								  	  	// console.log('FRIENDS TO DISPLAY', friends.data);
 								  	  	$scope.friends = friends.data;
 								      })
 							})
@@ -44,13 +44,14 @@ angular.module('hang.home', [])
 			console.log('FRIEND PASSED', friend);
 			Friends.addFriend({email: $scope.user.email, friendemail: friend})
 			  .then(function(friend) {
-			  	console.log('FRIEND ADDED');
+			  	location.path('/home');
+			  	// console.log('FRIEND ADDED');
 			  })
 		}
 
 
 		$scope.fireChatLogin = function() {
-			console.log('AVAILABLE FOR TOKEN', $scope.user);
+			// console.log('AVAILABLE FOR TOKEN', $scope.user);
 			// $location.path('/firechat');
 
 			Auth.fireChatLogin($scope.user)
@@ -60,35 +61,63 @@ angular.module('hang.home', [])
 				  console.log("Error authenticating user:", error);
 					});
 			  })
-		};
 
-		firebase.auth().onAuthStateChanged(function(user) {
+			firebase.auth().onAuthStateChanged(function(user) {
 
 			console.log('STATE CHANGE', user);
 			if (user) {
 				user.displayName = $scope.user.name;
 				room = $scope.current;
-				console.log('ROOM FOR FIRE', room);
-				console.log('MOD USER', user);
+				// console.log('ROOM FOR FIRE', room);
+				// console.log('MOD USER', user);
 		    initChat(user, room);
 		  }
+
 		});
+		};
+
+
 
 		function initChat(user, room) {
 
         var chatRef = firebase.database().ref("chat");
 
-        var chat = new Firechat(chatRef, document.getElementById("firechat"));
-        console.log('ROOM INIT', room);
+        var ui = new FirechatUI(chatRef, document.getElementById("firechat"));
+        // console.log('ROOM INIT', room);
 
-        chat.setUser($scope.user.id, $scope.user.name);
-        chat.createRoom('TEST', 'private', function(roomID) {
-        	console.log('ROOMID', roomID);
+        ui.setUser($scope.user.id, $scope.user.name);
+
+        ui._chat.getRoomList(function(rooms) {
+        	console.log('ALL ROOMS', rooms);
+
+        	for (var roomID in rooms) {
+        		if (rooms[roomID].name === room.description) {
+        			ui._chat.enterRoom(roomID);
+        			return;
+        		}
+        	}
+        	 ui._chat.createRoom(room.description, 'private', function(roomID) {
+	        	console.log('ROOMID', roomID);
+	        	ui._chat.enterRoom(roomID);
+	        });
         });
+
       }
 
     $scope.fireChatLogout = function() {
+    	firebase.auth().signOut().then(function() {
+        location.reload();
+      }).catch(function(error) {
+        console.log("Error signing user out:", error);
+      });
+    }
 
+    $scope.sendResponse = function(response) {
+    	console.log('INVITE RES', response);
+    	Events.sendResponse(response)
+    	  .then(function(result) {
+    	  	console.log('response saved', result);
+    	  })
     }
 
 		$scope.createEventClick = function($event) {
@@ -178,8 +207,9 @@ angular.module('hang.home', [])
 			});
 		}
 
-		$scope.uninviteGuest = function (guestId) {
-			Events.removeGuest(guestId)
+		$scope.uninviteGuest = function (guestid, eventid) {
+			console.log('GUEST PASSED IN', guestid, eventid);
+			Events.removeGuest(guestid, eventid)
 			  .then(function(result) {
 			  	console.log('removed guest', result);
 			  })

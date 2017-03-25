@@ -28,7 +28,7 @@ angular.module('hang', [
 			controller: 'HomeController'
 		})
 		.otherwise({
-			redirectTo: '/signin'
+			redirectTo: '/home'
 		});
 
 		$locationProvider.hashPrefix('');
