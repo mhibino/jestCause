@@ -24,9 +24,9 @@ module.exports = function(app, express) {
 
 	// GUESTS
 	app.get('/api/guests', guestController.getGuests);
-	// app.post('/api/guests', guestController.addGuest);
+	app.post('/api/guests', guestController.addGuest);
 	// app.put('/api/guests', guestController.editGuests);
-	// app.post('/api/guests/delete', guestController.deleteGuests);
+	app.post('/api/guests/delete', guestController.removeGuest);
 
 	// FRIENDS
 	app.get('/api/friends', friendController.getFriends);
