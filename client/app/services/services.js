@@ -212,12 +212,12 @@ angular.module('hang.services', [])
 			})
 		};
 
-		var addGuest = function(guest) {
+		var removeGuest = function(guest) {
 			return $http({
 				method: 'POST',
-				url: '/api/guests',
+				url: '/api/guests/delete',
 				data: {
-					email: guest.email
+					guestid: guest
 				}
 			})
 		}
@@ -228,7 +228,7 @@ angular.module('hang.services', [])
 			saveGuestList,
 			getGuestList,
 			getCurrentGuests,
-			addGuest
+			removeGuest
 		}
 	})
 

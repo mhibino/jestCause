@@ -8,7 +8,8 @@ angular.module('hang.home', [])
 		$scope.eventGuestList = [];
 		$scope.eventGuests = [];
 
-		Events.getGuestList(guests => $scope.guests = guests.toString());
+		Events.getGuestList(guests => $scope.guests = guests.data);
+		console.log('SCOPE GUESTS', $scope.guests)
 
 		Current.getCurrentEvent(event => $scope.current = event);
 
@@ -50,7 +51,7 @@ angular.module('hang.home', [])
 
 		$scope.fireChatLogin = function() {
 			console.log('AVAILABLE FOR TOKEN', $scope.user);
-			$location.path('/firechat');
+			// $location.path('/firechat');
 
 			Auth.fireChatLogin($scope.user)
 			  .then(function(token) {
@@ -77,7 +78,7 @@ angular.module('hang.home', [])
 
         var chatRef = firebase.database().ref("chat");
 
-        var chat = new FirechatUI(chatRef, document.getElementById("firechat"));
+        var chat = new Firechat(chatRef, document.getElementById("firechat"));
         console.log('ROOM INIT', room);
 
         chat.setUser($scope.user.id, $scope.user.name);
@@ -137,14 +138,12 @@ angular.module('hang.home', [])
 		$scope.showEventClick = function($event) {
 			$scope.current = this.item;
 			console.log('CURRENT ITEM', $scope.current);
+			Current.saveCurrentEvent(this.item);
 			Events.getCurrentGuests({eventid: this.item.id})
 			  .then(function(guests) {
 			  	console.log('THESE GUESTS', guests);
-			  	$scope.eventGuestList = guests;
-			  	Current.saveCurrentEvent(this.item)
-			  	  .then(function() {
-			  	  	$scope.toEventItem($event);
-			  	  })
+			  	Events.saveGuestList(guests);
+			  	$scope.toEventItem($event);
 			  })
 			  $scope.toEventItem($event);
 		}
@@ -177,6 +176,16 @@ angular.module('hang.home', [])
 					})
 					.then($route.reload())
 			});
+		}
+
+		$scope.uninviteGuest = function (guestId) {
+			Events.removeGuest(guestId)
+			  .then(function(result) {
+			  	console.log('removed guest', result);
+			  })
+			  .catch(function(err) {
+			  	console.error(err);
+			  })
 		}
 
 		$scope.userEventAdd = function () {
