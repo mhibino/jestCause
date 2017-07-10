@@ -1,40 +1,36 @@
 /*jshint esversion: 6 */
 /* friendController */
 
-var Friend = require('./friendModel');
-var db = require('../config/config');
+let Friend = require('./friendModel');
+let db = require('../config/config');
 
 module.exports = {
 
 	getFriends: function(req, res, next) {
 		console.log('GETTING FRIENDS - REQ: ', req.headers);
-		var userEmail = req.headers.email;
-		Friend.getFriends(userEmail, function(err, friends) {
-			if(err) {
-				next(new Error('Couldn\'t get your friends.'));
-			} else {
-				res.send({ error: false, message: 'Sending your friends', data: friends });
-			}
+		let userEmail = req.headers.email;
+		Friend.getFriends(userEmail, (err, friends) => {
+			if(err) next(new Error('Couldn\'t get your friends.'));
+			else res.send({ error: false, message: 'Sending your friends', data: friends });
 		});
 	},
 
 	addFriend: function(req, res, next) {
 		// return checkFriendCombo(req, res, next)
 		// console.log('Inside friendController-ADD-FRIEND...');
-		var userEmail = req.body.email;
+		let userEmail = req.body.email;
 		// console.log('L27: userEmail: ', userEmail);
-		var friendEmail = req.body.friendemail;
+		let friendEmail = req.body.friendemail;
 		// console.log('L29: friendEmail: ', friendEmail);
 
 		// take 2 emails and generate from_friend ID and to_friend ID
-		var from_friend_id;
-		var to_friend_id;
+		let from_friend_id;
+		let to_friend_id;
 		db.select('id').from('users').where('email', userEmail)
-		.then(function(userId) {
-			from_friend_id = userId[0].id;
+		.then(userId => from_friend_id = userId[0].id )
 			// console.log('L37: from_friend_id: ', from_friend_id);
-		})
-		.then(function(){
+
+		.then(() => {
 			// console.log('L40');
 			return db.select('id').from('users').where('email', friendEmail);
 		})
@@ -74,9 +70,9 @@ module.exports = {
 
 	deleteFriend: function(req, res, next) {
 		console.log('fc-88: deleteFriend...');
-		var userEmail = req.headers.email;
+		let userEmail = req.headers.email;
 		console.log('fc-90: userEmail: ', userEmail);
-		var friendEmail = req.headers.friendemail;
+		let friendEmail = req.headers.friendemail;
 		console.log('fc-92: friendEmail: ', friendEmail);
 		Friend.deleteFriend(userEmail, friendEmail, function(err, exFriend) {
 		// 	if(err) {
